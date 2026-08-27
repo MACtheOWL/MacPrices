@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="wwwroot/css/site.css">
+</head>
+
+<body>
+
+    <div class="mac-pricing">
+
+
+
+
+        <input class="price-input"
+               id="priceInput"
+               type="text"
+               inputmode="decimal"
+               autocomplete="off"
+               autofocus>
+
+        <div class="cad-card">
+            <div class="cad-label">CAD VALUE</div>
+            <div class="cad-price" id="cadPrice">$0.00</div>
+        </div>
+
+        <div class="percentage-title">BUY PRICE</div>
+
+        <div class="percentage-grid">
+
+            <div class="percentage-card">
+                <div class="percentage-number">50%</div>
+                <div class="percentage-price" id="price50">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">55%</div>
+                <div class="percentage-price" id="price55">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">60%</div>
+                <div class="percentage-price" id="price60">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">65%</div>
+                <div class="percentage-price" id="price65">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">70%</div>
+                <div class="percentage-price" id="price70">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">75%</div>
+                <div class="percentage-price" id="price75">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">80%</div>
+                <div class="percentage-price" id="price80">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">85%</div>
+                <div class="percentage-price" id="price85">$0.00</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Temporary exchange rate
+        const usdToCadRate = 1.38;
+
+        const priceInput = document.getElementById("priceInput");
+
+        // Only allow numbers, decimal, and editing/navigation keys
+        priceInput.addEventListener("keydown", function (event) {
+
+            const allowedKeys = [
+                "Backspace",
+                "Delete",
+                "Tab",
+                "ArrowLeft",
+                "ArrowRight",
+                "Home",
+                "End"
+            ];
+
+            if (event.ctrlKey || event.metaKey) {
+                return;
+            }
+
+            if (allowedKeys.includes(event.key)) {
+                return;
+            }
+
+            if (event.key >= "0" && event.key <= "9") {
+                return;
+            }
+
+            if (event.key === "." && !priceInput.value.includes(".")) {
+                return;
+            }
+
+            event.preventDefault();
+        });
+
+        // Calculate instantly
+        priceInput.addEventListener("input", function () {
+
+            let cleanValue = priceInput.value.replace(/[^0-9.]/g, "");
+
+            const firstDecimal = cleanValue.indexOf(".");
+
+            if (firstDecimal !== -1) {
+                cleanValue =
+                    cleanValue.substring(0, firstDecimal + 1) +
+                    cleanValue
+                        .substring(firstDecimal + 1)
+                        .replace(/\./g, "");
+            }
+
+            priceInput.value = cleanValue;
+
+            const usdPrice = parseFloat(cleanValue);
+
+            if (isNaN(usdPrice)) {
+                updatePrices(0);
+                return;
+            }
+
+            const cadPrice = usdPrice * usdToCadRate;
+
+            updatePrices(cadPrice);
+        });
+
+        function updatePrices(cadPrice) {
+
+            document.getElementById("cadPrice").textContent =
+                "$" + cadPrice.toFixed(2);
+
+            document.getElementById("price50").textContent =
+                "$" + (cadPrice * 0.50).toFixed(2);
+
+            document.getElementById("price55").textContent =
+                "$" + (cadPrice * 0.55).toFixed(2);
+
+            document.getElementById("price60").textContent =
+                "$" + (cadPrice * 0.60).toFixed(2);
+
+            document.getElementById("price65").textContent =
+                "$" + (cadPrice * 0.65).toFixed(2);
+
+            document.getElementById("price70").textContent =
+                "$" + (cadPrice * 0.70).toFixed(2);
+
+            document.getElementById("price75").textContent =
+                "$" + (cadPrice * 0.75).toFixed(2);
+
+            document.getElementById("price80").textContent =
+                "$" + (cadPrice * 0.80).toFixed(2);
+
+            document.getElementById("price85").textContent =
+                "$" + (cadPrice * 0.85).toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
