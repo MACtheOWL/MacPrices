@@ -5,16 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <link rel="stylesheet" href="wwwroot/css/site.css">
 </head>
 
 <body>
 
     <div class="mac-pricing">
-
-
-
 
         <input class="price-input"
                id="priceInput"
@@ -70,6 +66,11 @@
             <div class="percentage-card">
                 <div class="percentage-number">85%</div>
                 <div class="percentage-price" id="price85">$0.00</div>
+            </div>
+
+            <div class="percentage-card">
+                <div class="percentage-number">90%</div>
+                <div class="percentage-price" id="price90">$0.00</div>
             </div>
 
         </div>
@@ -171,6 +172,9 @@
 
             document.getElementById("price85").textContent =
                 "$" + (cadPrice * 0.85).toFixed(2);
+
+            document.getElementById("price90").textContent =
+                "$" + (cadPrice * 0.90).toFixed(2);
         }
     </script>
 
